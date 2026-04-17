@@ -243,6 +243,46 @@
       width: 8px; height: 8px; border-radius: 50%;
     }
 
+    /* 明日セクション */
+    .tomorrow-section {
+      background: var(--surface);
+      border: 0.5px solid var(--border);
+      border-radius: var(--radius);
+      padding: 14px 18px;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .tomorrow-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--muted);
+      margin-right: 4px;
+    }
+    .tomorrow-item {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 12px;
+      padding: 3px 10px;
+      border-radius: 20px;
+    }
+    .tomorrow-moyas   { background: var(--c-moyas-bg);   color: #993c1d; }
+    .tomorrow-plastic { background: var(--c-plastic-bg); color: #185fa5; }
+    .tomorrow-can     { background: var(--c-can-bg);     color: #0f6e56; }
+    .tomorrow-dot {
+      width: 7px; height: 7px; border-radius: 50%;
+    }
+    .tomorrow-dot-moyas   { background: var(--c-moyas); }
+    .tomorrow-dot-plastic { background: var(--c-plastic); }
+    .tomorrow-dot-can     { background: var(--c-can); }
+    .tomorrow-none {
+      font-size: 12px;
+      color: var(--hint);
+    }
+
     /* フッター */
     .footer {
       text-align: center;
@@ -336,7 +376,10 @@ async function init() {
 function render() {
   const app = document.getElementById('app');
   const today = new Date();
-  const todayDow = DAYS_JA[today.getDay()]; // "火" など
+  const tomorrow = new Date(today);
+  tomorrow.setDate(today.getDate() + 1);
+  const todayDow = DAYS_JA[today.getDay()];
+  const tomorrowDow = DAYS_JA[tomorrow.getDay()];
   const area = allAreas.find(a => a.id === selectedAreaId);
 
   // 日付バナー
@@ -362,12 +405,11 @@ function render() {
     return;
   }
 
-  // 収集カード
+  // 今日の収集カード
   const cardsHtml = GOMI_TYPES.map(type => {
     const days = type.getDays(area);
     const isToday = days.includes(todayDow);
     const dayLabel = days.length ? days.join('・') + '曜日' : '—';
-
     return `
       <div class="card ${isToday ? 'card-today ' + type.cssClass : 'card-none'}">
         <div class="card-head">
@@ -381,6 +423,22 @@ function render() {
         </div>
       </div>`;
   }).join('');
+
+  // 明日の収集まとめ
+  const tomorrowTypes = GOMI_TYPES.filter(type => type.getDays(area).includes(tomorrowDow));
+  const tomorrowDateStr = `${tomorrow.getMonth()+1}月${tomorrow.getDate()}日（${tomorrowDow}）`;
+  const tomorrowHtml = `
+    <div class="tomorrow-section">
+      <div class="tomorrow-label">明日 ${tomorrowDateStr}</div>
+      ${tomorrowTypes.length > 0
+        ? tomorrowTypes.map(type => `
+          <div class="tomorrow-item tomorrow-${type.cssClass}">
+            <div class="tomorrow-dot tomorrow-dot-${type.cssClass}"></div>
+            <div class="tomorrow-name">${type.label}</div>
+          </div>`).join('')
+        : `<div class="tomorrow-none">収集なし</div>`
+      }
+    </div>`;
 
   // 週間ドットカレンダー
   const weekHtml = buildWeekCalendar(area, todayDow);
@@ -404,7 +462,7 @@ function render() {
 
   app.innerHTML = dateHtml + selectorHtml +
     `<div class="cards">${cardsHtml}</div>` +
-    weekHtml + legendHtml + footerHtml;
+    tomorrowHtml + weekHtml + legendHtml + footerHtml;
 }
 
 // 週間ドットカレンダーを生成
