@@ -283,6 +283,24 @@
       color: var(--hint);
     }
 
+    /* 分別辞典ボタン */
+    .bunbetsu-btn {
+      display: block;
+      text-align: center;
+      background: var(--surface);
+      border: 0.5px solid var(--border-md);
+      border-radius: var(--radius);
+      padding: 14px 18px;
+      margin-bottom: 16px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--c-plastic);
+      text-decoration: none;
+    }
+    .bunbetsu-btn:hover {
+      background: var(--c-plastic-bg);
+    }
+
     /* フッター */
     .footer {
       text-align: center;
@@ -451,6 +469,12 @@ function render() {
       <div class="legend-item"><div class="legend-dot" style="background:var(--c-can)"></div>缶・びん・ペット</div>
     </div>`;
 
+  // 分別辞典ボタン
+  const bunbetsuHtml = `
+    <a href="https://www.gomisaku.jp/0145/?lang=ja" target="_blank" class="bunbetsu-btn">
+      これって何ゴミ？ → 分別辞典で調べる
+    </a>`;
+
   // フッター
   const footerHtml = `
     <div class="footer">
@@ -462,7 +486,7 @@ function render() {
 
   app.innerHTML = dateHtml + selectorHtml +
     `<div class="cards">${cardsHtml}</div>` +
-    tomorrowHtml + weekHtml + legendHtml + footerHtml;
+    tomorrowHtml + weekHtml + legendHtml + bunbetsuHtml + footerHtml;
 }
 
 // 週間ドットカレンダーを生成
