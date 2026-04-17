@@ -1,0 +1,461 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2685.5">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
+  </style>
+</head>
+<body>
+<p class="p1">&lt;!DOCTYPE html&gt;</p>
+<p class="p1">&lt;html lang="ja"&gt;</p>
+<p class="p1">&lt;head&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;meta charset="UTF-8"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;title&gt;今日のゴミ収集 — 渋沢連合自治会&lt;/title&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;style&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>:root {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>--bg: #f7f7f5;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>--surface: #ffffff;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>--border: rgba(0,0,0,0.10);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>--border-md: rgba(0,0,0,0.18);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>--text: #1a1a18;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>--muted: #6b6b67;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>--hint: #9e9e99;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>--radius: 12px;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>--radius-sm: 8px;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">      </span>/* ゴミ種別カラー */</p>
+<p class="p1"><span class="Apple-converted-space">      </span>--c-moyas: #e8593c;<span class="Apple-converted-space">    </span>/* 燃やすごみ：コーラル */</p>
+<p class="p1"><span class="Apple-converted-space">      </span>--c-moyas-bg: #faece7;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>--c-plastic: #3b8bd4;<span class="Apple-converted-space">  </span>/* プラスチック資源：ブルー */</p>
+<p class="p1"><span class="Apple-converted-space">      </span>--c-plastic-bg: #e6f1fb;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>--c-can: #1d9e75;<span class="Apple-converted-space">      </span>/* 缶・びん・ペット：ティール */</p>
+<p class="p1"><span class="Apple-converted-space">      </span>--c-can-bg: #e1f5ee;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>--c-nothing: #888780;<span class="Apple-converted-space">  </span>/* 収集なし：グレー */</p>
+<p class="p1"><span class="Apple-converted-space">      </span>--c-nothing-bg: #f1efe8;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>* { box-sizing: border-box; margin: 0; padding: 0; }</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>body {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>font-family: -apple-system, 'Hiragino Sans', 'Noto Sans JP', sans-serif;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>background: var(--bg);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>color: var(--text);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>min-height: 100vh;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>padding: 0 0 48px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>/* ヘッダー */</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.header {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>background: var(--surface);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>border-bottom: 0.5px solid var(--border);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>padding: 16px 20px 14px;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>position: sticky;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>top: 0;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>z-index: 10;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.header-title {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>font-size: 15px;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>font-weight: 600;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>color: var(--text);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.header-sub {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>font-size: 12px;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>color: var(--muted);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>margin-top: 2px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>/* メインコンテンツ */</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.main { padding: 16px 16px 0; max-width: 480px; margin: 0 auto; }</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>/* 日付バナー */</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.date-banner {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>background: var(--surface);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>border: 0.5px solid var(--border);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>border-radius: var(--radius);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>padding: 14px 18px;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>margin-bottom: 14px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.date-today {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>font-size: 22px;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>font-weight: 700;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>color: var(--text);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>line-height: 1.2;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.date-sub {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>font-size: 13px;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>color: var(--muted);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>margin-top: 3px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>/* 自治会セレクター */</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.selector-wrap {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>background: var(--surface);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>border: 0.5px solid var(--border);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>border-radius: var(--radius);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>padding: 14px 18px;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>margin-bottom: 16px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.selector-label {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>font-size: 12px;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>color: var(--muted);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>margin-bottom: 8px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>select {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>width: 100%;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>font-size: 15px;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>color: var(--text);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>background: var(--bg);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>border: 0.5px solid var(--border-md);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>border-radius: var(--radius-sm);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>padding: 10px 12px;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>appearance: none;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>-webkit-appearance: none;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M2 4l4 4 4-4' fill='none' stroke='%23888' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");</p>
+<p class="p1"><span class="Apple-converted-space">      </span>background-repeat: no-repeat;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>background-position: right 12px center;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>cursor: pointer;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>select:focus { outline: none; border-color: var(--c-plastic); }</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>/* 収集カード */</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.cards { display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px; }</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>.card {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>border-radius: var(--radius);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>padding: 16px 18px;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>border: 0.5px solid transparent;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.card-head {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>display: flex;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>align-items: center;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>justify-content: space-between;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>margin-bottom: 6px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.card-type {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>font-size: 13px;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>font-weight: 600;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.card-status {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>font-size: 12px;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>font-weight: 500;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>padding: 3px 10px;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>border-radius: 20px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.card-detail {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>font-size: 12px;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>line-height: 1.6;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>/* 今日収集あり */</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.card-today.moyas <span class="Apple-converted-space">  </span>{ background: var(--c-moyas-bg); <span class="Apple-converted-space">  </span>border-color: var(--c-moyas); <span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.card-today.plastic { background: var(--c-plastic-bg); border-color: var(--c-plastic); }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.card-today.can <span class="Apple-converted-space">    </span>{ background: var(--c-can-bg); <span class="Apple-converted-space">    </span>border-color: var(--c-can); <span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>.card-today.moyas <span class="Apple-converted-space">  </span>.card-type { color: var(--c-moyas); }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.card-today.plastic .card-type { color: var(--c-plastic); }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.card-today.can <span class="Apple-converted-space">    </span>.card-type { color: var(--c-can); }</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>.card-today.moyas <span class="Apple-converted-space">  </span>.card-status { background: var(--c-moyas); <span class="Apple-converted-space">  </span>color: #fff; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.card-today.plastic .card-status { background: var(--c-plastic); color: #fff; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.card-today.can <span class="Apple-converted-space">    </span>.card-status { background: var(--c-can); <span class="Apple-converted-space">    </span>color: #fff; }</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>.card-today.moyas <span class="Apple-converted-space">  </span>.card-detail { color: #993c1d; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.card-today.plastic .card-detail { color: #185fa5; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.card-today.can <span class="Apple-converted-space">    </span>.card-detail { color: #0f6e56; }</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>/* 今日収集なし */</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.card-none {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>background: var(--c-nothing-bg);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>border-color: var(--border);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.card-none .card-type <span class="Apple-converted-space">  </span>{ color: var(--muted); }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.card-none .card-status { background: var(--border-md); color: var(--muted); }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.card-none .card-detail { color: var(--hint); }</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>/* 週間スケジュール */</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.week-section {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>background: var(--surface);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>border: 0.5px solid var(--border);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>border-radius: var(--radius);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>padding: 16px 18px;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>margin-bottom: 16px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.week-title {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>font-size: 13px;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>font-weight: 600;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>color: var(--muted);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>margin-bottom: 12px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.week-row {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>display: flex;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>gap: 4px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.week-day {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>flex: 1;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>text-align: center;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.week-day-label {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>font-size: 11px;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>color: var(--hint);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>margin-bottom: 4px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.week-day-label.today-label {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>color: var(--c-plastic);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>font-weight: 600;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.week-day-dots {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>display: flex;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>flex-direction: column;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>gap: 3px;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>align-items: center;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.dot {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>width: 8px;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>height: 8px;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>border-radius: 50%;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.dot-moyas <span class="Apple-converted-space">  </span>{ background: var(--c-moyas); }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.dot-plastic { background: var(--c-plastic); }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.dot-can <span class="Apple-converted-space">    </span>{ background: var(--c-can); }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.dot-empty <span class="Apple-converted-space">  </span>{ background: transparent; }</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>/* ローディング・エラー */</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.loading, .error {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>text-align: center;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>padding: 40px 20px;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>color: var(--muted);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>font-size: 14px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.error { color: #a32d2d; }</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>/* 凡例 */</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.legend {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>display: flex;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>gap: 12px;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>flex-wrap: wrap;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>background: var(--surface);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>border: 0.5px solid var(--border);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>border-radius: var(--radius);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>padding: 12px 16px;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>margin-bottom: 16px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.legend-item {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>display: flex;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>align-items: center;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>gap: 5px;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>font-size: 11px;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>color: var(--muted);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.legend-dot {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>width: 8px; height: 8px; border-radius: 50%;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>/* フッター */</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.footer {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>text-align: center;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>font-size: 11px;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>color: var(--hint);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>margin-top: 24px;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>line-height: 1.8;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.footer a { color: var(--hint); }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/style&gt;</p>
+<p class="p1">&lt;/head&gt;</p>
+<p class="p1">&lt;body&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;div class="header"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="header-title"&gt;渋沢連合自治会&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="header-sub"&gt;ゴミ収集日チェッカー&lt;/div&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;div class="main"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div id="app"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="loading"&gt;読み込み中...&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;script&gt;</p>
+<p class="p1">// ============================================================</p>
+<p class="p1">//<span class="Apple-converted-space">  </span>設定：GASデプロイ後のURLをここに貼る</p>
+<p class="p1">// ============================================================</p>
+<p class="p1">const API_URL = 'https://script.google.com/macros/s/AKfycbyVJ_yM_arZtDVgEts-ufmwMsZHmlKXOL3ITkg9NTXia1OsRXznm7s-nWJdiCaf-PYc/exec';</p>
+<p class="p2"><br></p>
+<p class="p1">// ============================================================</p>
+<p class="p1">//<span class="Apple-converted-space">  </span>定数</p>
+<p class="p1">// ============================================================</p>
+<p class="p1">const DAYS_JA = ['日','月','火','水','木','金','土'];</p>
+<p class="p1">const WEEK_DAYS = ['月','火','水','木','金','土','日'];</p>
+<p class="p2"><br></p>
+<p class="p1">const GOMI_TYPES = [</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{</p>
+<p class="p1"><span class="Apple-converted-space">    </span>key: 'moyas',</p>
+<p class="p1"><span class="Apple-converted-space">    </span>label: '燃やすごみ',</p>
+<p class="p1"><span class="Apple-converted-space">    </span>sub: '燃えないごみ・スプレー缶・乾電池も同日',</p>
+<p class="p1"><span class="Apple-converted-space">    </span>cssClass: 'moyas',</p>
+<p class="p1"><span class="Apple-converted-space">    </span>getDays: a =&gt; a.moyas_days</p>
+<p class="p1"><span class="Apple-converted-space">  </span>},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{</p>
+<p class="p1"><span class="Apple-converted-space">    </span>key: 'plastic',</p>
+<p class="p1"><span class="Apple-converted-space">    </span>label: 'プラスチック資源',</p>
+<p class="p1"><span class="Apple-converted-space">    </span>sub: '容器包装 + プラスチック製品（2025年4月〜新ルール）',</p>
+<p class="p1"><span class="Apple-converted-space">    </span>cssClass: 'plastic',</p>
+<p class="p1"><span class="Apple-converted-space">    </span>getDays: a =&gt; a.plastic_day ? [a.plastic_day] : []</p>
+<p class="p1"><span class="Apple-converted-space">  </span>},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{</p>
+<p class="p1"><span class="Apple-converted-space">    </span>key: 'can',</p>
+<p class="p1"><span class="Apple-converted-space">    </span>label: '缶・びん・ペットボトル',</p>
+<p class="p1"><span class="Apple-converted-space">    </span>sub: '小さな金属類も同日',</p>
+<p class="p1"><span class="Apple-converted-space">    </span>cssClass: 'can',</p>
+<p class="p1"><span class="Apple-converted-space">    </span>getDays: a =&gt; a.can_day ? [a.can_day] : []</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1">];</p>
+<p class="p2"><br></p>
+<p class="p1">// ============================================================</p>
+<p class="p1">//<span class="Apple-converted-space">  </span>状態</p>
+<p class="p1">// ============================================================</p>
+<p class="p1">let allAreas = [];</p>
+<p class="p1">let selectedAreaId = localStorage.getItem('selectedArea') || '';</p>
+<p class="p2"><br></p>
+<p class="p1">// ============================================================</p>
+<p class="p1">//<span class="Apple-converted-space">  </span>初期化</p>
+<p class="p1">// ============================================================</p>
+<p class="p1">async function init() {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>try {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const res = await fetch(API_URL);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const data = await res.json();</p>
+<p class="p1"><span class="Apple-converted-space">    </span>allAreas = data.areas || [];</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>// 前回選択を復元、なければ先頭</p>
+<p class="p1"><span class="Apple-converted-space">    </span>if (!allAreas.find(a =&gt; a.id === selectedAreaId)) {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>selectedAreaId = allAreas[0]?.id || '';</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>render();</p>
+<p class="p1"><span class="Apple-converted-space">  </span>} catch (e) {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>document.getElementById('app').innerHTML =</p>
+<p class="p1"><span class="Apple-converted-space">      </span>'&lt;div class="error"&gt;データの読み込みに失敗しました。&lt;br&gt;しばらく経ってから再度お試しください。&lt;/div&gt;';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">// ============================================================</p>
+<p class="p1">//<span class="Apple-converted-space">  </span>レンダリング</p>
+<p class="p1">// ============================================================</p>
+<p class="p1">function render() {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const app = document.getElementById('app');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const today = new Date();</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const todayDow = DAYS_JA[today.getDay()]; // "火" など</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const area = allAreas.find(a =&gt; a.id === selectedAreaId);</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>// 日付バナー</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const dateStr = `${today.getMonth()+1}月${today.getDate()}日（${todayDow}）`;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const dateHtml = `</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="date-banner"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="date-today"&gt;${dateStr}&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="date-sub"&gt;今日の収集日情報&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;`;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>// 自治会セレクター</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const options = allAreas.map(a =&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>`&lt;option value="${a.id}" ${a.id === selectedAreaId ? 'selected' : ''}&gt;${a.name}&lt;/option&gt;`</p>
+<p class="p1"><span class="Apple-converted-space">  </span>).join('');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const selectorHtml = `</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="selector-wrap"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="selector-label"&gt;自治会を選択&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;select onchange="changeArea(this.value)"&gt;${options}&lt;/select&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;`;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>if (!area) {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>app.innerHTML = dateHtml + selectorHtml + '&lt;div class="error"&gt;自治会データが見つかりません&lt;/div&gt;';</p>
+<p class="p1"><span class="Apple-converted-space">    </span>return;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>// 収集カード</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const cardsHtml = GOMI_TYPES.map(type =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const days = type.getDays(area);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const isToday = days.includes(todayDow);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const dayLabel = days.length ? days.join('・') + '曜日' : '—';</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>return `</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="card ${isToday ? 'card-today ' + type.cssClass : 'card-none'}"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="card-head"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="card-type"&gt;${type.label}&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="card-status"&gt;${isToday ? '今日収集' : '収集なし'}&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="card-detail"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>収集日：${dayLabel}</p>
+<p class="p1"><span class="Apple-converted-space">          </span>${type.sub ? `&lt;br&gt;${type.sub}` : ''}</p>
+<p class="p1"><span class="Apple-converted-space">          </span>${area.note &amp;&amp; type.key === 'moyas' ? `&lt;br&gt;備考：${area.note}` : ''}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;`;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}).join('');</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>// 週間ドットカレンダー</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const weekHtml = buildWeekCalendar(area, todayDow);</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>// 凡例</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const legendHtml = `</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="legend"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="legend-item"&gt;&lt;div class="legend-dot" style="background:var(--c-moyas)"&gt;&lt;/div&gt;燃やすごみ&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="legend-item"&gt;&lt;div class="legend-dot" style="background:var(--c-plastic)"&gt;&lt;/div&gt;プラスチック資源&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="legend-item"&gt;&lt;div class="legend-dot" style="background:var(--c-can)"&gt;&lt;/div&gt;缶・びん・ペット&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;`;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>// フッター</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const footerHtml = `</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="footer"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>朝8時までに集積場所へ出してください&lt;br&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;a href="https://www.city.yokohama.lg.jp/kurashi/sumai-kurashi/gomi-recycle/gomi/shushuyobi/tsuzuki/" target="_blank"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>横浜市公式：都筑区の収集曜日</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/a&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;`;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>app.innerHTML = dateHtml + selectorHtml +</p>
+<p class="p1"><span class="Apple-converted-space">    </span>`&lt;div class="cards"&gt;${cardsHtml}&lt;/div&gt;` +</p>
+<p class="p1"><span class="Apple-converted-space">    </span>weekHtml + legendHtml + footerHtml;</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">// 週間ドットカレンダーを生成</p>
+<p class="p1">function buildWeekCalendar(area, todayDow) {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const cols = WEEK_DAYS.map(dow =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const dots = [];</p>
+<p class="p1"><span class="Apple-converted-space">    </span>if (area.moyas_days.includes(dow)) <span class="Apple-converted-space">    </span>dots.push('&lt;div class="dot dot-moyas"&gt;&lt;/div&gt;');</p>
+<p class="p1"><span class="Apple-converted-space">    </span>if (area.plastic_day === dow)<span class="Apple-converted-space">          </span>dots.push('&lt;div class="dot dot-plastic"&gt;&lt;/div&gt;');</p>
+<p class="p1"><span class="Apple-converted-space">    </span>if (area.can_day === dow)<span class="Apple-converted-space">              </span>dots.push('&lt;div class="dot dot-can"&gt;&lt;/div&gt;');</p>
+<p class="p1"><span class="Apple-converted-space">    </span>if (dots.length === 0) <span class="Apple-converted-space">                </span>dots.push('&lt;div class="dot dot-empty"&gt;&lt;/div&gt;');</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>const isToday = dow === todayDow;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>return `</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="week-day"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="week-day-label ${isToday ? 'today-label' : ''}"&gt;${dow}&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="week-day-dots"&gt;${dots.join('')}&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;`;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}).join('');</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>return `</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="week-section"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="week-title"&gt;今週の収集スケジュール&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="week-row"&gt;${cols}&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;`;</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">// 自治会変更</p>
+<p class="p1">function changeArea(id) {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>selectedAreaId = id;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>localStorage.setItem('selectedArea', id);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>render();</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">// 起動</p>
+<p class="p1">init();</p>
+<p class="p1">&lt;/script&gt;</p>
+<p class="p1">&lt;/body&gt;</p>
+<p class="p1">&lt;/html&gt;</p>
+</body>
+</html>
