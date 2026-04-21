@@ -264,6 +264,57 @@
       font-size: 12px;
       color: var(--hint);
     }
+    /* 豆知識カード */
+    .tip-section {
+      background: #fff9ea;
+      border: 0.5px solid #eadca3;
+      border-radius: var(--radius);
+      padding: 16px 18px;
+      margin-bottom: 16px;
+    }
+    .tip-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+    .tip-icon {
+      font-size: 16px;
+    }
+    .tip-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: #8a6d1e;
+    }
+    .tip-chip {
+      margin-left: auto;
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 10px;
+      background: #f2e5b3;
+      color: #7a5c11;
+    }
+    .tip-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: #4a3a10;
+      line-height: 1.4;
+      margin-bottom: 6px;
+    }
+    .tip-body {
+      font-size: 13px;
+      color: #5a4a1e;
+      line-height: 1.7;
+      margin-bottom: 10px;
+    }
+    .tip-source {
+      font-size: 11px;
+      color: #8a6d1e;
+      text-decoration: none;
+      border-bottom: 0.5px solid #caac4d;
+      padding-bottom: 1px;
+    }
+    .tip-source:hover { color: #4a3a10; }
     /* 分別辞典ボタン */
     .bunbetsu-btn {
       display: block;
@@ -339,6 +390,7 @@ const GOMI_TYPES = [
 //  状態
 // ============================================================
 let allAreas = [];
+let allTips  = [];
 let selectedAreaId = localStorage.getItem('selectedArea') || '';
 // ============================================================
 //  初期化
@@ -348,6 +400,7 @@ async function init() {
     const res = await fetch(API_URL);
     const data = await res.json();
     allAreas = data.areas || [];
+    allTips  = data.tips || [];
     // 前回選択を復元、なければ先頭
     if (!allAreas.find(a => a.id === selectedAreaId)) {
       selectedAreaId = allAreas[0]?.id || '';
@@ -424,6 +477,8 @@ function render() {
     </div>`;
   // 週間ドットカレンダー
   const weekHtml = buildWeekCalendar(area, todayDow);
+  // 今日の豆知識
+  const tipHtml = buildTipCard(allTips);
   // 凡例
   const legendHtml = `
     <div class="legend">
@@ -434,7 +489,7 @@ function render() {
   // 分別辞典ボタン
   const bunbetsuHtml = `
     <a href="https://cgi.city.yokohama.lg.jp/shigen/bunbetsu/m/" target="_blank" class="bunbetsu-btn">
-      これって何ゴミ？ → 横浜市ごみ分別システム
+      これって何ゴミ？ → 横浜市ごみ分別辞典で調べる
     </a>`;
   // フッター
   const footerHtml = `
@@ -446,7 +501,41 @@ function render() {
     </div>`;
   app.innerHTML = dateHtml + selectorHtml +
     `<div class="cards">${cardsHtml}</div>` +
-    tomorrowHtml + weekHtml + legendHtml + bunbetsuHtml + footerHtml;
+    tomorrowHtml + weekHtml + tipHtml + legendHtml + bunbetsuHtml + footerHtml;
+}
+// 今日の豆知識カードを生成（日付ベースのローテーション）
+function buildTipCard(tips) {
+  if (!tips || tips.length === 0) return '';
+  const today = new Date();
+  const start = new Date(today.getFullYear(), 0, 0);
+  const dayOfYear = Math.floor((today - start) / 86400000);
+  const tip = tips[dayOfYear % tips.length];
+  const title = escapeHtml(tip.title);
+  const body  = escapeHtml(tip.body);
+  const cat   = escapeHtml(tip.category);
+  const url   = tip.source_url;
+  const sourceLink = url
+    ? `<a class="tip-source" href="${url}" target="_blank" rel="noopener">公式：横浜市の出典を見る →</a>`
+    : '';
+  return `
+    <div class="tip-section">
+      <div class="tip-header">
+        <div class="tip-label">今日の豆知識</div>
+        <div class="tip-chip">${cat}</div>
+      </div>
+      <div class="tip-title">${title}</div>
+      <div class="tip-body">${body}</div>
+      ${sourceLink}
+    </div>`;
+}
+// 安全なHTMLエスケープ
+function escapeHtml(str) {
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
 }
 // 週間ドットカレンダーを生成
 function buildWeekCalendar(area, todayDow) {
