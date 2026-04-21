@@ -15,7 +15,6 @@
       --hint: #9e9e99;
       --radius: 12px;
       --radius-sm: 8px;
-
       /* ゴミ種別カラー */
       --c-moyas: #e8593c;    /* 燃やすごみ：コーラル */
       --c-moyas-bg: #faece7;
@@ -26,9 +25,7 @@
       --c-nothing: #888780;  /* 収集なし：グレー */
       --c-nothing-bg: #f1efe8;
     }
-
     * { box-sizing: border-box; margin: 0; padding: 0; }
-
     body {
       font-family: -apple-system, 'Hiragino Sans', 'Noto Sans JP', sans-serif;
       background: var(--bg);
@@ -36,7 +33,6 @@
       min-height: 100vh;
       padding: 0 0 48px;
     }
-
     /* ヘッダー */
     .header {
       background: var(--surface);
@@ -56,10 +52,8 @@
       color: var(--muted);
       margin-top: 2px;
     }
-
     /* メインコンテンツ */
     .main { padding: 16px 16px 0; max-width: 480px; margin: 0 auto; }
-
     /* 日付バナー */
     .date-banner {
       background: var(--surface);
@@ -79,7 +73,6 @@
       color: var(--muted);
       margin-top: 3px;
     }
-
     /* 自治会セレクター */
     .selector-wrap {
       background: var(--surface);
@@ -109,10 +102,8 @@
       cursor: pointer;
     }
     select:focus { outline: none; border-color: var(--c-plastic); }
-
     /* 収集カード */
     .cards { display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px; }
-
     .card {
       border-radius: var(--radius);
       padding: 16px 18px;
@@ -138,24 +129,19 @@
       font-size: 12px;
       line-height: 1.6;
     }
-
     /* 今日収集あり */
     .card-today.moyas   { background: var(--c-moyas-bg);   border-color: var(--c-moyas);   }
     .card-today.plastic { background: var(--c-plastic-bg); border-color: var(--c-plastic); }
     .card-today.can     { background: var(--c-can-bg);     border-color: var(--c-can);     }
-
     .card-today.moyas   .card-type { color: var(--c-moyas); }
     .card-today.plastic .card-type { color: var(--c-plastic); }
     .card-today.can     .card-type { color: var(--c-can); }
-
     .card-today.moyas   .card-status { background: var(--c-moyas);   color: #fff; }
     .card-today.plastic .card-status { background: var(--c-plastic); color: #fff; }
     .card-today.can     .card-status { background: var(--c-can);     color: #fff; }
-
     .card-today.moyas   .card-detail { color: #993c1d; }
     .card-today.plastic .card-detail { color: #185fa5; }
     .card-today.can     .card-detail { color: #0f6e56; }
-
     /* 今日収集なし */
     .card-none {
       background: var(--c-nothing-bg);
@@ -164,7 +150,6 @@
     .card-none .card-type   { color: var(--muted); }
     .card-none .card-status { background: var(--border-md); color: var(--muted); }
     .card-none .card-detail { color: var(--hint); }
-
     /* 週間スケジュール */
     .week-section {
       background: var(--surface);
@@ -211,7 +196,6 @@
     .dot-plastic { background: var(--c-plastic); }
     .dot-can     { background: var(--c-can); }
     .dot-empty   { background: transparent; }
-
     /* ローディング・エラー */
     .loading, .error {
       text-align: center;
@@ -220,7 +204,6 @@
       font-size: 14px;
     }
     .error { color: #a32d2d; }
-
     /* 凡例 */
     .legend {
       display: flex;
@@ -242,7 +225,6 @@
     .legend-dot {
       width: 8px; height: 8px; border-radius: 50%;
     }
-
     /* 明日セクション */
     .tomorrow-section {
       background: var(--surface);
@@ -282,7 +264,6 @@
       font-size: 12px;
       color: var(--hint);
     }
-
     /* 分別辞典ボタン */
     .bunbetsu-btn {
       display: block;
@@ -300,7 +281,6 @@
     .bunbetsu-btn:hover {
       background: var(--c-plastic-bg);
     }
-
     /* フッター */
     .footer {
       text-align: center;
@@ -313,30 +293,25 @@
   </style>
 </head>
 <body>
-
 <div class="header">
   <div class="header-title">渋沢連合自治会</div>
   <div class="header-sub">ゴミ収集日チェッカー</div>
 </div>
-
 <div class="main">
   <div id="app">
     <div class="loading">読み込み中...</div>
   </div>
 </div>
-
 <script>
 // ============================================================
 //  設定：GASデプロイ後のURLをここに貼る
 // ============================================================
 const API_URL = 'https://script.google.com/macros/s/AKfycbyVJ_yM_arZtDVgEts-ufmwMsZHmlKXOL3ITkg9NTXia1OsRXznm7s-nWJdiCaf-PYc/exec';
-
 // ============================================================
 //  定数
 // ============================================================
 const DAYS_JA = ['日','月','火','水','木','金','土'];
 const WEEK_DAYS = ['月','火','水','木','金','土','日'];
-
 const GOMI_TYPES = [
   {
     key: 'moyas',
@@ -360,13 +335,11 @@ const GOMI_TYPES = [
     getDays: a => a.can_day ? [a.can_day] : []
   }
 ];
-
 // ============================================================
 //  状態
 // ============================================================
 let allAreas = [];
 let selectedAreaId = localStorage.getItem('selectedArea') || '';
-
 // ============================================================
 //  初期化
 // ============================================================
@@ -375,19 +348,16 @@ async function init() {
     const res = await fetch(API_URL);
     const data = await res.json();
     allAreas = data.areas || [];
-
     // 前回選択を復元、なければ先頭
     if (!allAreas.find(a => a.id === selectedAreaId)) {
       selectedAreaId = allAreas[0]?.id || '';
     }
-
     render();
   } catch (e) {
     document.getElementById('app').innerHTML =
       '<div class="error">データの読み込みに失敗しました。<br>しばらく経ってから再度お試しください。</div>';
   }
 }
-
 // ============================================================
 //  レンダリング
 // ============================================================
@@ -399,7 +369,6 @@ function render() {
   const todayDow = DAYS_JA[today.getDay()];
   const tomorrowDow = DAYS_JA[tomorrow.getDay()];
   const area = allAreas.find(a => a.id === selectedAreaId);
-
   // 日付バナー
   const dateStr = `${today.getMonth()+1}月${today.getDate()}日（${todayDow}）`;
   const dateHtml = `
@@ -407,7 +376,6 @@ function render() {
       <div class="date-today">${dateStr}</div>
       <div class="date-sub">今日の収集日情報</div>
     </div>`;
-
   // 自治会セレクター
   const options = allAreas.map(a =>
     `<option value="${a.id}" ${a.id === selectedAreaId ? 'selected' : ''}>${a.name}</option>`
@@ -417,12 +385,10 @@ function render() {
       <div class="selector-label">自治会を選択</div>
       <select onchange="changeArea(this.value)">${options}</select>
     </div>`;
-
   if (!area) {
     app.innerHTML = dateHtml + selectorHtml + '<div class="error">自治会データが見つかりません</div>';
     return;
   }
-
   // 今日の収集カード
   const cardsHtml = GOMI_TYPES.map(type => {
     const days = type.getDays(area);
@@ -441,7 +407,6 @@ function render() {
         </div>
       </div>`;
   }).join('');
-
   // 明日の収集まとめ
   const tomorrowTypes = GOMI_TYPES.filter(type => type.getDays(area).includes(tomorrowDow));
   const tomorrowDateStr = `${tomorrow.getMonth()+1}月${tomorrow.getDate()}日（${tomorrowDow}）`;
@@ -457,10 +422,8 @@ function render() {
         : `<div class="tomorrow-none">収集なし</div>`
       }
     </div>`;
-
   // 週間ドットカレンダー
   const weekHtml = buildWeekCalendar(area, todayDow);
-
   // 凡例
   const legendHtml = `
     <div class="legend">
@@ -468,13 +431,11 @@ function render() {
       <div class="legend-item"><div class="legend-dot" style="background:var(--c-plastic)"></div>プラスチック資源</div>
       <div class="legend-item"><div class="legend-dot" style="background:var(--c-can)"></div>缶・びん・ペット</div>
     </div>`;
-
   // 分別辞典ボタン
   const bunbetsuHtml = `
-    <a href="https://www.gomisaku.jp/0145/?lang=ja" target="_blank" class="bunbetsu-btn">
-      これって何ゴミ？ → 分別辞典で調べる
+    <a href="https://cgi.city.yokohama.lg.jp/shigen/bunbetsu/m/" target="_blank" class="bunbetsu-btn">
+      これって何ゴミ？ → 横浜市ごみ分別辞典で調べる
     </a>`;
-
   // フッター
   const footerHtml = `
     <div class="footer">
@@ -483,12 +444,10 @@ function render() {
         横浜市公式：都筑区の収集曜日
       </a>
     </div>`;
-
   app.innerHTML = dateHtml + selectorHtml +
     `<div class="cards">${cardsHtml}</div>` +
     tomorrowHtml + weekHtml + legendHtml + bunbetsuHtml + footerHtml;
 }
-
 // 週間ドットカレンダーを生成
 function buildWeekCalendar(area, todayDow) {
   const cols = WEEK_DAYS.map(dow => {
@@ -497,7 +456,6 @@ function buildWeekCalendar(area, todayDow) {
     if (area.plastic_day === dow)          dots.push('<div class="dot dot-plastic"></div>');
     if (area.can_day === dow)              dots.push('<div class="dot dot-can"></div>');
     if (dots.length === 0)                 dots.push('<div class="dot dot-empty"></div>');
-
     const isToday = dow === todayDow;
     return `
       <div class="week-day">
@@ -505,21 +463,18 @@ function buildWeekCalendar(area, todayDow) {
         <div class="week-day-dots">${dots.join('')}</div>
       </div>`;
   }).join('');
-
   return `
     <div class="week-section">
       <div class="week-title">今週の収集スケジュール</div>
       <div class="week-row">${cols}</div>
     </div>`;
 }
-
 // 自治会変更
 function changeArea(id) {
   selectedAreaId = id;
   localStorage.setItem('selectedArea', id);
   render();
 }
-
 // 起動
 init();
 </script>
