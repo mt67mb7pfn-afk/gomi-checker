@@ -15,14 +15,13 @@
       --hint: #9e9e99;
       --radius: 12px;
       --radius-sm: 8px;
-      /* ゴミ種別カラー */
-      --c-moyas: #e8593c;    /* 燃やすごみ：コーラル */
+      --c-moyas: #e8593c;
       --c-moyas-bg: #faece7;
-      --c-plastic: #3b8bd4;  /* プラスチック資源：ブルー */
+      --c-plastic: #3b8bd4;
       --c-plastic-bg: #e6f1fb;
-      --c-can: #1d9e75;      /* 缶・びん・ペット：ティール */
+      --c-can: #1d9e75;
       --c-can-bg: #e1f5ee;
-      --c-nothing: #888780;  /* 収集なし：グレー */
+      --c-nothing: #888780;
       --c-nothing-bg: #f1efe8;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -33,7 +32,6 @@
       min-height: 100vh;
       padding: 0 0 48px;
     }
-    /* ヘッダー */
     .header {
       background: var(--surface);
       border-bottom: 0.5px solid var(--border);
@@ -42,19 +40,9 @@
       top: 0;
       z-index: 10;
     }
-    .header-title {
-      font-size: 15px;
-      font-weight: 600;
-      color: var(--text);
-    }
-    .header-sub {
-      font-size: 12px;
-      color: var(--muted);
-      margin-top: 2px;
-    }
-    /* メインコンテンツ */
+    .header-title { font-size: 15px; font-weight: 600; color: var(--text); }
+    .header-sub { font-size: 12px; color: var(--muted); margin-top: 2px; }
     .main { padding: 16px 16px 0; max-width: 480px; margin: 0 auto; }
-    /* 日付バナー */
     .date-banner {
       background: var(--surface);
       border: 0.5px solid var(--border);
@@ -62,17 +50,8 @@
       padding: 14px 18px;
       margin-bottom: 14px;
     }
-    .date-today {
-      font-size: 22px;
-      font-weight: 700;
-      color: var(--text);
-      line-height: 1.2;
-    }
-    .date-sub {
-      font-size: 13px;
-      color: var(--muted);
-      margin-top: 3px;
-    }
+    .date-today { font-size: 22px; font-weight: 700; color: var(--text); line-height: 1.2; }
+    .date-sub { font-size: 13px; color: var(--muted); margin-top: 3px; }
     /* 自治会セレクター */
     .selector-wrap {
       background: var(--surface);
@@ -81,11 +60,7 @@
       padding: 14px 18px;
       margin-bottom: 16px;
     }
-    .selector-label {
-      font-size: 12px;
-      color: var(--muted);
-      margin-bottom: 8px;
-    }
+    .selector-label { font-size: 12px; color: var(--muted); margin-bottom: 8px; }
     select {
       width: 100%;
       font-size: 15px;
@@ -102,51 +77,45 @@
       cursor: pointer;
     }
     select:focus { outline: none; border-color: var(--c-plastic); }
-    /* 収集カード */
-    .cards { display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px; }
-    .card {
-      border-radius: var(--radius);
-      padding: 16px 18px;
-      border: 0.5px solid transparent;
-    }
-    .card-head {
+    /* 担当区域表示（案B：選択後に表示） */
+    .district-badge {
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      margin-bottom: 6px;
+      gap: 5px;
+      margin-top: 10px;
+      font-size: 12px;
+      color: var(--muted);
     }
-    .card-type {
-      font-size: 13px;
+    .district-badge-label {
       font-weight: 600;
+      color: var(--hint);
+      font-size: 11px;
+      white-space: nowrap;
     }
-    .card-status {
-      font-size: 12px;
-      font-weight: 500;
-      padding: 3px 10px;
-      border-radius: 20px;
+    .district-badge-value {
+      color: var(--muted);
+      line-height: 1.5;
     }
-    .card-detail {
-      font-size: 12px;
-      line-height: 1.6;
-    }
-    /* 今日収集あり */
+    /* 収集カード */
+    .cards { display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px; }
+    .card { border-radius: var(--radius); padding: 16px 18px; border: 0.5px solid transparent; }
+    .card-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; }
+    .card-type { font-size: 13px; font-weight: 600; }
+    .card-status { font-size: 12px; font-weight: 500; padding: 3px 10px; border-radius: 20px; }
+    .card-detail { font-size: 12px; line-height: 1.6; }
     .card-today.moyas   { background: var(--c-moyas-bg);   border-color: var(--c-moyas);   }
     .card-today.plastic { background: var(--c-plastic-bg); border-color: var(--c-plastic); }
     .card-today.can     { background: var(--c-can-bg);     border-color: var(--c-can);     }
-    .card-today.moyas   .card-type { color: var(--c-moyas); }
-    .card-today.plastic .card-type { color: var(--c-plastic); }
-    .card-today.can     .card-type { color: var(--c-can); }
+    .card-today.moyas   .card-type   { color: var(--c-moyas); }
+    .card-today.plastic .card-type   { color: var(--c-plastic); }
+    .card-today.can     .card-type   { color: var(--c-can); }
     .card-today.moyas   .card-status { background: var(--c-moyas);   color: #fff; }
     .card-today.plastic .card-status { background: var(--c-plastic); color: #fff; }
     .card-today.can     .card-status { background: var(--c-can);     color: #fff; }
     .card-today.moyas   .card-detail { color: #993c1d; }
     .card-today.plastic .card-detail { color: #185fa5; }
     .card-today.can     .card-detail { color: #0f6e56; }
-    /* 今日収集なし */
-    .card-none {
-      background: var(--c-nothing-bg);
-      border-color: var(--border);
-    }
+    .card-none { background: var(--c-nothing-bg); border-color: var(--border); }
     .card-none .card-type   { color: var(--muted); }
     .card-none .card-status { background: var(--border-md); color: var(--muted); }
     .card-none .card-detail { color: var(--hint); }
@@ -158,73 +127,31 @@
       padding: 16px 18px;
       margin-bottom: 16px;
     }
-    .week-title {
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--muted);
-      margin-bottom: 12px;
-    }
-    .week-row {
-      display: flex;
-      gap: 4px;
-    }
-    .week-day {
-      flex: 1;
-      text-align: center;
-    }
-    .week-day-label {
-      font-size: 11px;
-      color: var(--hint);
-      margin-bottom: 4px;
-    }
-    .week-day-label.today-label {
-      color: var(--c-plastic);
-      font-weight: 600;
-    }
-    .week-day-dots {
-      display: flex;
-      flex-direction: column;
-      gap: 3px;
-      align-items: center;
-    }
-    .dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-    }
+    .week-title { font-size: 13px; font-weight: 600; color: var(--muted); margin-bottom: 12px; }
+    .week-row { display: flex; gap: 4px; }
+    .week-day { flex: 1; text-align: center; }
+    .week-day-label { font-size: 11px; color: var(--hint); margin-bottom: 4px; }
+    .week-day-label.today-label { color: var(--c-plastic); font-weight: 600; }
+    .week-day-dots { display: flex; flex-direction: column; gap: 3px; align-items: center; }
+    .dot { width: 8px; height: 8px; border-radius: 50%; }
     .dot-moyas   { background: var(--c-moyas); }
     .dot-plastic { background: var(--c-plastic); }
     .dot-can     { background: var(--c-can); }
     .dot-empty   { background: transparent; }
     /* ローディング・エラー */
-    .loading, .error {
-      text-align: center;
-      padding: 40px 20px;
-      color: var(--muted);
-      font-size: 14px;
-    }
+    .loading, .error { text-align: center; padding: 40px 20px; color: var(--muted); font-size: 14px; }
     .error { color: #a32d2d; }
     /* 凡例 */
     .legend {
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
+      display: flex; gap: 12px; flex-wrap: wrap;
       background: var(--surface);
       border: 0.5px solid var(--border);
       border-radius: var(--radius);
       padding: 12px 16px;
       margin-bottom: 16px;
     }
-    .legend-item {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      font-size: 11px;
-      color: var(--muted);
-    }
-    .legend-dot {
-      width: 8px; height: 8px; border-radius: 50%;
-    }
+    .legend-item { display: flex; align-items: center; gap: 5px; font-size: 11px; color: var(--muted); }
+    .legend-dot { width: 8px; height: 8px; border-radius: 50%; }
     /* 明日セクション */
     .tomorrow-section {
       background: var(--surface);
@@ -232,38 +159,18 @@
       border-radius: var(--radius);
       padding: 14px 18px;
       margin-bottom: 16px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      flex-wrap: wrap;
+      display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
     }
-    .tomorrow-label {
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--muted);
-      margin-right: 4px;
-    }
-    .tomorrow-item {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      font-size: 12px;
-      padding: 3px 10px;
-      border-radius: 20px;
-    }
+    .tomorrow-label { font-size: 12px; font-weight: 600; color: var(--muted); margin-right: 4px; }
+    .tomorrow-item { display: flex; align-items: center; gap: 5px; font-size: 12px; padding: 3px 10px; border-radius: 20px; }
     .tomorrow-moyas   { background: var(--c-moyas-bg);   color: #993c1d; }
     .tomorrow-plastic { background: var(--c-plastic-bg); color: #185fa5; }
     .tomorrow-can     { background: var(--c-can-bg);     color: #0f6e56; }
-    .tomorrow-dot {
-      width: 7px; height: 7px; border-radius: 50%;
-    }
+    .tomorrow-dot { width: 7px; height: 7px; border-radius: 50%; }
     .tomorrow-dot-moyas   { background: var(--c-moyas); }
     .tomorrow-dot-plastic { background: var(--c-plastic); }
     .tomorrow-dot-can     { background: var(--c-can); }
-    .tomorrow-none {
-      font-size: 12px;
-      color: var(--hint);
-    }
+    .tomorrow-none { font-size: 12px; color: var(--hint); }
     /* 豆知識カード */
     .tip-section {
       background: #fff9ea;
@@ -272,74 +179,26 @@
       padding: 16px 18px;
       margin-bottom: 16px;
     }
-    .tip-header {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 10px;
-    }
-    .tip-icon {
-      font-size: 16px;
-    }
-    .tip-label {
-      font-size: 12px;
-      font-weight: 600;
-      color: #8a6d1e;
-    }
-    .tip-chip {
-      margin-left: auto;
-      font-size: 11px;
-      padding: 2px 8px;
-      border-radius: 10px;
-      background: #f2e5b3;
-      color: #7a5c11;
-    }
-    .tip-title {
-      font-size: 15px;
-      font-weight: 700;
-      color: #4a3a10;
-      line-height: 1.4;
-      margin-bottom: 6px;
-    }
-    .tip-body {
-      font-size: 13px;
-      color: #5a4a1e;
-      line-height: 1.7;
-      margin-bottom: 10px;
-    }
-    .tip-source {
-      font-size: 11px;
-      color: #8a6d1e;
-      text-decoration: none;
-      border-bottom: 0.5px solid #caac4d;
-      padding-bottom: 1px;
-    }
+    .tip-header { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+    .tip-label { font-size: 12px; font-weight: 600; color: #8a6d1e; }
+    .tip-chip { margin-left: auto; font-size: 11px; padding: 2px 8px; border-radius: 10px; background: #f2e5b3; color: #7a5c11; }
+    .tip-title { font-size: 15px; font-weight: 700; color: #4a3a10; line-height: 1.4; margin-bottom: 6px; }
+    .tip-body { font-size: 13px; color: #5a4a1e; line-height: 1.7; margin-bottom: 10px; }
+    .tip-source { font-size: 11px; color: #8a6d1e; text-decoration: none; border-bottom: 0.5px solid #caac4d; padding-bottom: 1px; }
     .tip-source:hover { color: #4a3a10; }
     /* 分別辞典ボタン */
     .bunbetsu-btn {
-      display: block;
-      text-align: center;
+      display: block; text-align: center;
       background: var(--surface);
       border: 0.5px solid var(--border-md);
       border-radius: var(--radius);
-      padding: 14px 18px;
-      margin-bottom: 16px;
-      font-size: 14px;
-      font-weight: 500;
-      color: var(--c-plastic);
-      text-decoration: none;
+      padding: 14px 18px; margin-bottom: 16px;
+      font-size: 14px; font-weight: 500;
+      color: var(--c-plastic); text-decoration: none;
     }
-    .bunbetsu-btn:hover {
-      background: var(--c-plastic-bg);
-    }
+    .bunbetsu-btn:hover { background: var(--c-plastic-bg); }
     /* フッター */
-    .footer {
-      text-align: center;
-      font-size: 11px;
-      color: var(--hint);
-      margin-top: 24px;
-      line-height: 1.8;
-    }
+    .footer { text-align: center; font-size: 11px; color: var(--hint); margin-top: 24px; line-height: 1.8; }
     .footer a { color: var(--hint); }
   </style>
 </head>
@@ -355,13 +214,21 @@
 </div>
 <script>
 // ============================================================
-//  設定：GASデプロイ後のURLをここに貼る
+//  設定
 // ============================================================
-const API_URL = 'https://script.google.com/macros/s/AKfycbyVJ_yM_arZtDVgEts-ufmwMsZHmlKXOL3ITkg9NTXia1OsRXznm7s-nWJdiCaf-PYc/exec';
+const GAS_BASE_URL = 'https://script.google.com/macros/s/AKfycbyVJ_yM_arZtDVgEts-ufmwMsZHmlKXOL3ITkg9NTXia1OsRXznm7s-nWJdiCaf-PYc/exec';
+
+// 将来の粗大ごみ対応：?mode=sodai を渡すだけで切り替え可能
+function buildApiUrl(mode) {
+  return mode && mode !== 'daily'
+    ? `${GAS_BASE_URL}?mode=${mode}`
+    : GAS_BASE_URL;
+}
+
 // ============================================================
 //  定数
 // ============================================================
-const DAYS_JA = ['日','月','火','水','木','金','土'];
+const DAYS_JA   = ['日','月','火','水','木','金','土'];
 const WEEK_DAYS = ['月','火','水','木','金','土','日'];
 const GOMI_TYPES = [
   {
@@ -386,22 +253,25 @@ const GOMI_TYPES = [
     getDays: a => a.can_day ? [a.can_day] : []
   }
 ];
+
 // ============================================================
 //  状態
 // ============================================================
 let allAreas = [];
 let allTips  = [];
 let selectedAreaId = localStorage.getItem('selectedArea') || '';
+
 // ============================================================
 //  初期化
 // ============================================================
 async function init() {
   try {
-    const res = await fetch(API_URL);
+    const res  = await fetch(buildApiUrl('daily'));
     const data = await res.json();
     allAreas = data.areas || [];
-    allTips  = data.tips || [];
-    // 前回選択を復元、なければ先頭
+    allTips  = data.tips  || [];
+
+    // 前回選択を復元。存在しないIDの場合（旧IDなど）は先頭にフォールバック
     if (!allAreas.find(a => a.id === selectedAreaId)) {
       selectedAreaId = allAreas[0]?.id || '';
     }
@@ -411,40 +281,55 @@ async function init() {
       '<div class="error">データの読み込みに失敗しました。<br>しばらく経ってから再度お試しください。</div>';
   }
 }
+
 // ============================================================
 //  レンダリング
 // ============================================================
 function render() {
-  const app = document.getElementById('app');
-  const today = new Date();
+  const app      = document.getElementById('app');
+  const today    = new Date();
   const tomorrow = new Date(today);
   tomorrow.setDate(today.getDate() + 1);
-  const todayDow = DAYS_JA[today.getDay()];
+  const todayDow    = DAYS_JA[today.getDay()];
   const tomorrowDow = DAYS_JA[tomorrow.getDay()];
   const area = allAreas.find(a => a.id === selectedAreaId);
+
   // 日付バナー
-  const dateStr = `${today.getMonth()+1}月${today.getDate()}日（${todayDow}）`;
+  const dateStr  = `${today.getMonth()+1}月${today.getDate()}日（${todayDow}）`;
   const dateHtml = `
     <div class="date-banner">
       <div class="date-today">${dateStr}</div>
       <div class="date-sub">今日の収集日情報</div>
     </div>`;
-  // 自治会セレクター
+
+  // 自治会セレクター + 担当区域バッジ（案B）
   const options = allAreas.map(a =>
     `<option value="${a.id}" ${a.id === selectedAreaId ? 'selected' : ''}>${a.name}</option>`
   ).join('');
+
+  const districtText = area && area.district
+    ? `<div class="district-badge">
+         <span class="district-badge-label">担当区域</span>
+         <span class="district-badge-value">${escapeHtml(area.district)}</span>
+       </div>`
+    : '';
+
   const selectorHtml = `
     <div class="selector-wrap">
       <div class="selector-label">自治会を選択</div>
       <select onchange="changeArea(this.value)">${options}</select>
+      ${districtText}
     </div>`;
+
   if (!area) {
-    app.innerHTML = dateHtml + selectorHtml + '<div class="error">自治会データが見つかりません</div>';
+    app.innerHTML = dateHtml + selectorHtml +
+      '<div class="error">自治会データが見つかりません</div>';
     return;
   }
+
   // 今日の収集カード
   const cardsHtml = GOMI_TYPES.map(type => {
-    const days = type.getDays(area);
+    const days    = type.getDays(area);
     const isToday = days.includes(todayDow);
     const dayLabel = days.length ? days.join('・') + '曜日' : '—';
     return `
@@ -460,8 +345,9 @@ function render() {
         </div>
       </div>`;
   }).join('');
+
   // 明日の収集まとめ
-  const tomorrowTypes = GOMI_TYPES.filter(type => type.getDays(area).includes(tomorrowDow));
+  const tomorrowTypes   = GOMI_TYPES.filter(type => type.getDays(area).includes(tomorrowDow));
   const tomorrowDateStr = `${tomorrow.getMonth()+1}月${tomorrow.getDate()}日（${tomorrowDow}）`;
   const tomorrowHtml = `
     <div class="tomorrow-section">
@@ -475,10 +361,13 @@ function render() {
         : `<div class="tomorrow-none">収集なし</div>`
       }
     </div>`;
+
   // 週間ドットカレンダー
   const weekHtml = buildWeekCalendar(area, todayDow);
+
   // 今日の豆知識
   const tipHtml = buildTipCard(allTips);
+
   // 凡例
   const legendHtml = `
     <div class="legend">
@@ -486,11 +375,13 @@ function render() {
       <div class="legend-item"><div class="legend-dot" style="background:var(--c-plastic)"></div>プラスチック資源</div>
       <div class="legend-item"><div class="legend-dot" style="background:var(--c-can)"></div>缶・びん・ペット</div>
     </div>`;
+
   // 分別辞典ボタン
   const bunbetsuHtml = `
     <a href="https://cgi.city.yokohama.lg.jp/shigen/bunbetsu/m/" target="_blank" class="bunbetsu-btn">
       これって何ゴミ？ → 横浜市ごみ分別辞典で調べる
     </a>`;
+
   // フッター
   const footerHtml = `
     <div class="footer">
@@ -499,21 +390,23 @@ function render() {
         横浜市公式：都筑区の収集曜日
       </a>
     </div>`;
+
   app.innerHTML = dateHtml + selectorHtml +
     `<div class="cards">${cardsHtml}</div>` +
     tomorrowHtml + weekHtml + tipHtml + legendHtml + bunbetsuHtml + footerHtml;
 }
+
 // 今日の豆知識カードを生成（日付ベースのローテーション）
 function buildTipCard(tips) {
   if (!tips || tips.length === 0) return '';
-  const today = new Date();
-  const start = new Date(today.getFullYear(), 0, 0);
+  const today  = new Date();
+  const start  = new Date(today.getFullYear(), 0, 0);
   const dayOfYear = Math.floor((today - start) / 86400000);
-  const tip = tips[dayOfYear % tips.length];
-  const title = escapeHtml(tip.title);
-  const body  = escapeHtml(tip.body);
-  const cat   = escapeHtml(tip.category);
-  const url   = tip.source_url;
+  const tip    = tips[dayOfYear % tips.length];
+  const title  = escapeHtml(tip.title);
+  const body   = escapeHtml(tip.body);
+  const cat    = escapeHtml(tip.category);
+  const url    = tip.source_url;
   const sourceLink = url
     ? `<a class="tip-source" href="${url}" target="_blank" rel="noopener">公式：横浜市の出典を見る →</a>`
     : '';
@@ -528,6 +421,7 @@ function buildTipCard(tips) {
       ${sourceLink}
     </div>`;
 }
+
 // 安全なHTMLエスケープ
 function escapeHtml(str) {
   return String(str)
@@ -537,14 +431,15 @@ function escapeHtml(str) {
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&#39;');
 }
+
 // 週間ドットカレンダーを生成
 function buildWeekCalendar(area, todayDow) {
   const cols = WEEK_DAYS.map(dow => {
     const dots = [];
-    if (area.moyas_days.includes(dow))     dots.push('<div class="dot dot-moyas"></div>');
-    if (area.plastic_day === dow)          dots.push('<div class="dot dot-plastic"></div>');
-    if (area.can_day === dow)              dots.push('<div class="dot dot-can"></div>');
-    if (dots.length === 0)                 dots.push('<div class="dot dot-empty"></div>');
+    if (area.moyas_days.includes(dow)) dots.push('<div class="dot dot-moyas"></div>');
+    if (area.plastic_day === dow)      dots.push('<div class="dot dot-plastic"></div>');
+    if (area.can_day === dow)          dots.push('<div class="dot dot-can"></div>');
+    if (dots.length === 0)             dots.push('<div class="dot dot-empty"></div>');
     const isToday = dow === todayDow;
     return `
       <div class="week-day">
@@ -558,12 +453,14 @@ function buildWeekCalendar(area, todayDow) {
       <div class="week-row">${cols}</div>
     </div>`;
 }
+
 // 自治会変更
 function changeArea(id) {
   selectedAreaId = id;
   localStorage.setItem('selectedArea', id);
   render();
 }
+
 // 起動
 init();
 </script>
